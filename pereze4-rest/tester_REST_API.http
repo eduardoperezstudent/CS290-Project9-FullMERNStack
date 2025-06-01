@@ -44,10 +44,10 @@ Content-Type: application/json
 
 {
   "name": "Lunges",
-  "reps": 0,
+  "reps": 10,
   "weight": 1,
-  "unit": "lbs",
-  "date": "06-01-25"
+  "unit": "kgs",
+  "date": "02-29-24"
 }
 ###
 ### Explanation: reps and weight must be > 0.
@@ -100,10 +100,10 @@ Content-Type: application/json
 
 {
   "name": "Squats",
-  "reps": 15,
+  "reps": -15,
   "weight": 5,
   "unit": "KGS",
-  "date": "06-02-25"
+  "date": "06-30-25"
 }
 ###
 ### Explanation: unit is uppercase; validator lowercases before saving.

@@ -173,6 +173,7 @@ async function deleteExerciseById(id) {
   return result.deletedCount === 1;
 }
 
+
 // Export only the functions (do not export the Exercise model class)
 export {
   connect,
