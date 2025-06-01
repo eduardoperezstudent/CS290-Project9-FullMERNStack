@@ -1,0 +1,390 @@
+### =====================================================
+### 1) GET /exercises (initially empty)
+### =====================================================
+GET http://localhost:3000/exercises
+Accept: application/json
+
+###
+### Expected response: 200 OK with an empty array
+###
+### HTTP/1.1 200 OK
+### Content-Type: application/json
+###
+### []
+
+
+
+### =====================================================
+### 2) POST /exercises → Failure (missing fields)
+### =====================================================
+POST http://localhost:3000/exercises
+Content-Type: application/json
+
+{
+  "name": "Squats",
+  "reps": 10,
+  "unit": "kgs"
+}
+###
+### Explanation: Body is missing both "weight" and "date" (and has extra/insufficient keys).
+### Expected response: 400 Bad Request, { "Error": "Invalid request" }
+###
+### HTTP/1.1 400 Bad Request
+### Content-Type: application/json
+###
+### { "Error": "Invalid request" }
+
+
+
+### =====================================================
+### 3) POST /exercises → Failure (zero or negative reps/weight)
+### =====================================================
+POST http://localhost:3000/exercises
+Content-Type: application/json
+
+{
+  "name": "Lunges",
+  "reps": 0,
+  "weight": 0,
+  "unit": "lbs",
+  "date": "06-01-25"
+}
+###
+### Explanation: reps and weight must be > 0.
+### Expected response: 400 Bad Request, { "Error": "Invalid request" }
+###
+### HTTP/1.1 400 Bad Request
+### Content-Type: application/json
+###
+### { "Error": "Invalid request" }
+
+
+
+### =====================================================
+### 4) POST /exercises → Success (valid exercise #1)
+### =====================================================
+POST http://localhost:3000/exercises
+Content-Type: application/json
+
+{
+  "name": "Push Ups",
+  "reps": 20,
+  "weight": 1,
+  "unit": "lbs",
+  "date": "06-01-25"
+}
+###
+### Expected response: 201 Created with the new document (including _id).
+### Save the returned _id from the response body for subsequent tests.
+###
+### HTTP/1.1 201 Created
+### Content-Type: application/json
+###
+### {
+###   "_id": "‹copy_this_id›",
+###   "name": "Push Ups",
+###   "reps": 20,
+###   "weight": 1,
+###   "unit": "lbs",
+###   "date": "06-01-25",
+###   "__v": 0
+### }
+
+
+
+### =====================================================
+### 5) POST /exercises → Success (valid exercise #2)
+### =====================================================
+POST http://localhost:3000/exercises
+Content-Type: application/json
+
+{
+  "name": "Squats",
+  "reps": 15,
+  "weight": 5,
+  "unit": "KGS",
+  "date": "06-02-25"
+}
+###
+### Explanation: unit is uppercase; validator lowercases before saving.
+### Expected response: 201 Created with the new document.
+### Again, copy the returned _id to reuse if desired.
+###
+### HTTP/1.1 201 Created
+### Content-Type: application/json
+###
+### {
+###   "_id": "‹copy_this_id_too›",
+###   "name": "Squats",
+###   "reps": 15,
+###   "weight": 5,
+###   "unit": "kgs",
+###   "date": "06-02-25",
+###   "__v": 0
+### }
+
+
+
+### =====================================================
+### 6) GET /exercises (after two inserts)
+### =====================================================
+GET http://localhost:3000/exercises
+Accept: application/json
+
+###
+### Expected response: 200 OK with an array of both documents.
+###
+### HTTP/1.1 200 OK
+### Content-Type: application/json
+###
+### [
+###   {
+###     "_id": "‹paste_id_from_step_4›",
+###     "name": "Push Ups",
+###     "reps": 20,
+###     "weight": 1,
+###     "unit": "lbs",
+###     "date": "06-01-25",
+###     "__v": 0
+###   },
+###   {
+###     "_id": "‹paste_id_from_step_5›",
+###     "name": "Squats",
+###     "reps": 15,
+###     "weight": 5,
+###     "unit": "kgs",
+###     "date": "06-02-25",
+###     "__v": 0
+###   }
+### ]
+
+
+
+### =====================================================
+### 7) GET /exercises/:_id → Failure (invalid / non‐existent ID)
+### =====================================================
+GET http://localhost:3000/exercises/000000000000000000000000
+Accept: application/json
+
+###
+### Expected response: 404 Not Found, { "Error": "Not found" }
+###
+### HTTP/1.1 404 Not Found
+### Content-Type: application/json
+###
+### { "Error": "Not found" }
+
+
+
+### =====================================================
+### 8) GET /exercises/:_id → Success
+### =====================================================
+# Replace <PASTE_ID_FROM_STEP_4> below with the _id you got in step 4
+GET http://localhost:3000/exercises/683c93d97a20c7621c66c6a1
+Accept: application/json
+
+###
+### Expected response: 200 OK with that single document
+###
+### HTTP/1.1 200 OK
+### Content-Type: application/json
+###
+### {
+###   "_id": "‹paste_id_from_step_4›",
+###   "name": "Push Ups",
+###   "reps": 20,
+###   "weight": 1,
+###   "unit": "lbs",
+###   "date": "06-01-25",
+###   "__v": 0
+### }
+
+
+
+### =====================================================
+### 9) PUT /exercises/:_id → Failure (invalid request body)
+### =====================================================
+# Replace <PASTE_ID_FROM_STEP_4> below
+PUT http://localhost:3000/exercises/683c93d97a20c7621c66c6a1
+Content-Type: application/json
+
+{
+  "name": "",
+  "reps": -5,
+  "weight": 3,
+  "unit": "lbs"
+}
+###
+### Explanation: Missing “date” key, “name” is empty, “reps” is negative.
+### Expected response: 400 Bad Request, { "Error": "Invalid request" }
+###
+### HTTP/1.1 400 Bad Request
+### Content-Type: application/json
+###
+### { "Error": "Invalid request" }
+
+
+
+### =====================================================
+### 10) PUT /exercises/:_id → Failure (non‐existent ID, valid body)
+### =====================================================
+# Replace <PASTE_ID_FROM_STEP_4> with a valid ID that does NOT exist (e.g., 0000…0000)
+PUT http://localhost:3000/exercises/000000000000000000000000
+Content-Type: application/json
+
+{
+  "name": "Pull Ups",
+  "reps": 10,
+  "weight": 5,
+  "unit": "LBS",
+  "date": "06-03-25"
+}
+###
+### Expected response: 404 Not Found, { "Error": "Not found" }
+###
+### HTTP/1.1 404 Not Found
+### Content-Type: application/json
+###
+### { "Error": "Not found" }
+
+
+
+### =====================================================
+### 11) PUT /exercises/:_id → Success (update existing document)
+### =====================================================
+# Replace <PASTE_ID_FROM_STEP_4> below with the same ID from step 4
+PUT http://localhost:3000/exercises/683c93d97a20c7621c66c6a1
+Content-Type: application/json
+
+{
+  "name": "Wide Push Ups",
+  "reps": 25,
+  "weight": 2,
+  "unit": "LBS",
+  "date": "06-01-25"
+}
+###
+### Expected response: 200 OK with the updated document
+###
+### HTTP/1.1 200 OK
+### Content-Type: application/json
+###
+### {
+###   "_id": "‹paste_id_from_step_4›",
+###   "name": "Wide Push Ups",
+###   "reps": 25,
+###   "weight": 2,
+###   "unit": "lbs",
+###   "date": "06-01-25",
+###   "__v": 0
+### }
+
+
+
+### =====================================================
+### 12) GET /exercises/:_id (verify the update)
+### =====================================================
+# Replace <PASTE_ID_FROM_STEP_4> below
+GET http://localhost:3000/exercises/683c93d97a20c7621c66c6a1
+Accept: application/json
+
+###
+### Expected response: 200 OK showing the updated fields
+###
+### HTTP/1.1 200 OK
+### Content-Type: application/json
+###
+### {
+###   "_id": "‹paste_id_from_step_4›",
+###   "name": "Wide Push Ups",
+###   "reps": 25,
+###   "weight": 2,
+###   "unit": "lbs",
+###   "date": "06-01-25",
+###   "__v": 0
+### }
+
+
+
+### =====================================================
+### 13) DELETE /exercises/:_id → Failure (non‐existent ID)
+### =====================================================
+# Use an ID that doesn’t exist, e.g., 000000000000000000000000
+DELETE http://localhost:3000/exercises/000000000000000000000000
+
+###
+### Expected response: 404 Not Found, { "Error": "Not found" }
+###
+### HTTP/1.1 404 Not Found
+### Content-Type: application/json
+###
+### { "Error": "Not found" }
+
+
+
+### =====================================================
+### 14) DELETE /exercises/:_id → Success
+### =====================================================
+# Replace <PASTE_ID_FROM_STEP_4> below
+DELETE http://localhost:3000/exercises/683c93d97a20c7621c66c6a1
+
+###
+### Expected response: 204 No Content (empty body)
+###
+### HTTP/1.1 204 No Content
+
+
+
+### =====================================================
+### 15) GET /exercises (verify deletion)
+### =====================================================
+GET http://localhost:3000/exercises
+Accept: application/json
+
+###
+### Expected response: 200 OK with an array containing only “Squats” 
+###  (since we deleted the “Push Ups” document but left “Squats”)
+###
+### HTTP/1.1 200 OK
+### Content-Type: application/json
+###
+### [
+###   {
+###     "_id": "‹paste_id_from_step_5›",
+###     "name": "Squats",
+###     "reps": 15,
+###     "weight": 5,
+###     "unit": "kgs",
+###     "date": "06-02-25",
+###     "__v": 0
+###   }
+### ]
+
+
+
+### =====================================================
+### 16) DELETE /exercises/:_id → Success (remove last doc)
+### =====================================================
+# Finally, delete the remaining “Squats” document
+DELETE http://localhost:3000/exercises/683c94fb7a20c7621c66c6a4
+
+###
+### Expected response: 204 No Content
+###
+### HTTP/1.1 204 No Content
+
+
+
+### =====================================================
+### 17) GET /exercises (verify all gone)
+### =====================================================
+GET http://localhost:3000/exercises
+Accept: application/json
+
+###
+### Expected response: 200 OK with an empty array
+###
+### HTTP/1.1 200 OK
+### Content-Type: application/json
+###
+### []
