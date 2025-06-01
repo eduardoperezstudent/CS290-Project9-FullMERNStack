@@ -45,7 +45,7 @@ Content-Type: application/json
 {
   "name": "Lunges",
   "reps": 0,
-  "weight": 0,
+  "weight": 1,
   "unit": "lbs",
   "date": "06-01-25"
 }
