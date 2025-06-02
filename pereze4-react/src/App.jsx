@@ -32,13 +32,11 @@ function App() {
 
         {/* --- Main Content: Router Outlet --- */}
         <main>
-          <BrowserRouter>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/add" element={<AddExercisePage />} />
               <Route path="/edit" element={<EditExercisePage />} />
             </Routes>
-          </BrowserRouter>
         </main>
 
         {/* --- Footer (shared on all pages) --- */}
