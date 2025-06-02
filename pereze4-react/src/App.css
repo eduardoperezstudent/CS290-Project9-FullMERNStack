@@ -1,155 +1,113 @@
-/* src/App.css */
+/* 1) GLOBAL PAGE DESIGN */
+/* -------------------------------------------------- */
 
-/* --- Root color variables --- */
-:root {
-  --primary-bg: #fafafa;
-  --primary-text: #333;
-  --accent-color: #ffcc00;
-  --header-bg: #ffffff;
-  --nav-bg: #ffffff;
-  --border-color: #ddd;
-}
+
 
 body {
+  font-family: 'Segoe UI', Verdana, Geneva, sans-serif;
+  background-color: #f9f7fc;
+  color: #333333;
   margin: 0;
   padding: 0;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background-color: var(--primary-bg);
-  color: var(--primary-text);
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-#root {
-  flex: 1;
+.App {
   display: flex;
   flex-direction: column;
-}
-
-/* --- App Header --- */
-.app-header {
-  background-color: var(--header-bg);
-  border-bottom: 1px solid var(--border-color);
-  padding: 1rem 2rem;
-}
-
-.header-content {
-  display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  width: 100%;
+}
+
+/* 2) HEADER & NAVIGATION */
+/* -------------------------------------------------- */
+header {
+  background-color: #ffffff;
+  border-bottom: 2px solid #e0ddec;
+  padding: 1rem 0;
+  text-align: center;
+  width: 100%;
+}
+
+header .header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .white-cat-image {
-  max-width: 100px;
-  height: auto;
+  max-width: 120px;
+  border: 2px solid #e0ddec;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .header-text h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.5rem;
+  color: #d17fa0;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px #e8e0f0;
   margin: 0;
-  font-size: 2rem;
-  color: var(--accent-color);
 }
 
 .header-text p {
-  margin: 0.2rem 0 0;
+  margin: 0.25rem 0 0;
+  color: #555;
   font-size: 1rem;
-  color: var(--primary-text);
 }
 
-/* --- Navigation Bar --- */
 nav {
-  background-color: var(--nav-bg);
-  padding: 0.5rem 0;
   display: flex;
-  gap: 1.5rem;
   justify-content: center;
-  border-bottom: 1px solid var(--border-color);
+  gap: 1.5rem;
+  margin-top: 0.75rem;
 }
 
 nav a {
-  color: var(--primary-text);
+  font-size: 1.1rem;
+  color: #6f5499;
   text-decoration: none;
-  font-weight: 500;
-  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+  transition: color 0.2s ease-in-out;
 }
 
 nav a:hover {
-  color: var(--accent-color);
-  text-decoration: underline;
+  color: #d17fa0;
 }
 
-/* --- Main container --- */
+/* 3) MAIN CONTAINER */
+/* -------------------------------------------------- */
 main {
-  flex: 1;
+  width: 100%;
+  max-width: 1024px;
   padding: 2rem;
-  max-width: 1280px;
-  margin: 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 4) FORM PAGE + HOME PAGE */
+/* -------------------------------------------------- */
+.form-page,
+.home-page {
   width: 100%;
-}
-
-/* --- Footer --- */
-.app-footer {
-  background-color: var(--header-bg);
-  text-align: center;
-  padding: 1rem;
-  border-top: 1px solid var(--border-color);
-  font-size: 0.9rem;
-}
-
-/* --- Table styling --- */
-.exercise-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-
-.exercise-table th,
-.exercise-table td {
-  border: 1px solid var(--border-color);
-  padding: 0.6rem;
-  text-align: center;
-}
-
-.exercise-table th {
-  background-color: var(--nav-bg);
-}
-
-.icon-cell {
-  width: 40px;
-}
-
-.icon {
-  cursor: pointer;
-  font-size: 1.2rem;
-  color: var(--primary-text);
-  transition: color 0.2s;
-}
-
-.edit-icon:hover {
-  color: #007bff;
-}
-
-.delete-icon:hover {
-  color: #dc3545;
-}
-
-/* --- Form styling (Add/Edit pages) --- */
-.form-page {
   max-width: 600px;
   margin: 0 auto;
-  text-align: left;
+  text-align: center;
 }
 
 .exercise-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  text-align: left;
 }
 
+/* Form fields */
 .exercise-form label {
   display: flex;
   flex-direction: column;
@@ -158,32 +116,101 @@ main {
 
 .exercise-form input,
 .exercise-form select {
+  border: 1px solid #d3c9e6;
+  border-radius: 4px;
   padding: 0.5rem;
+  background-color: #ffffff;
   font-family: inherit;
   font-size: 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
 }
 
 .exercise-form button {
-  align-self: flex-start;
-  padding: 0.6rem 1.2rem;
-  font-size: 1rem;
-  font-weight: 500;
-  background-color: var(--accent-color);
+  background-color: #6f5499;
+  color: #f9f7fc;
   border: none;
   border-radius: 4px;
-  color: #ffffff;
+  padding: 0.6rem 1rem;
   cursor: pointer;
-  transition: background-color 0.2s;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .exercise-form button:hover {
-  background-color: #e6b800;
+  background-color: #d17fa0;
 }
 
-/* --- Error message styling --- */
-.error-msg {
-  color: red;
-  margin-bottom: 1rem;
+
+/* 5) TABLE STYLING */
+/* -------------------------------------------------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+.exercise-table th {
+  background-color: #e9d7f5;  /* slightly bolder lavender for headers */
+  color: #333333;
+  border: 1px solid #d3c9e6;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.exercise-table td {
+  border: 1px solid #d3c9e6;
+  padding: 0.75rem;
+  color: #333333;
+}
+
+/* Zebra striping for rows */
+.exercise-table tbody tr:nth-child(odd) {
+  background-color: #fbfaff;  /* soft, nearly white */
+}
+
+.exercise-table tbody tr:nth-child(even) {
+  background-color: #f5f0fb;  /* subtle lavender tone */
+}
+
+
+/* 6) FOOTER */
+/* -------------------------------------------------- */
+footer {
+  background-color: #ffffff;
+  border-top: 2px solid #e0ddec;
+  padding: 0.75rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555555;
+  width: 100%;
+}
+
+/* 7) UTILITY CLASSES */
+/* -------------------------------------------------- */
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+
+/* 8) ICON INTERACTIONS */
+/* -------------------------------------------------- */
+.icon {
+  cursor: pointer;
+  transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.edit-icon:hover {
+  color: #4a90e2; /* calm blue */
+  transform: scale(1.1);
+}
+
+.delete-icon:hover {
+  color: #d9534f; /* vivid red */
+  transform: scale(1.1);
 }

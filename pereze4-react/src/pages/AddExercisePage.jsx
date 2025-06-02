@@ -16,6 +16,13 @@ export default function AddExercisePage() {
   const [date, setDate] = useState('');
   const navigate = useNavigate();
 
+  // Get today's date in MM-DD-YY format for placeholder
+  const today = new Date().toLocaleDateString('en-US', {
+    year: '2-digit',
+    month: '2-digit',
+    day: '2-digit'
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Build the payload exactly as the backend expects:
@@ -103,7 +110,7 @@ export default function AddExercisePage() {
             type="text"
             value={date}
             required
-            placeholder="06-01-25"
+            placeholder={today.replace(/\//g, '-')}
             onChange={(e) => setDate(e.target.value)}
           />
         </label>

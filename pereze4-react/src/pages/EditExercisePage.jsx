@@ -18,6 +18,13 @@ export default function EditExercisePage() {
   const [date, setDate] = useState('');
   const navigate = useNavigate();
 
+  // Get today's date in MM-DD-YY format for placeholder
+  const today = new Date().toLocaleDateString('en-US', {
+    year: '2-digit',
+    month: '2-digit',
+    day: '2-digit'
+  });
+
   useEffect(() => {
     // If context is null, we have nothing to edit → bounce to Home
     if (!exerciseToEdit) {
@@ -117,7 +124,7 @@ export default function EditExercisePage() {
             type="text"
             value={date}
             required
-            placeholder="06-01-25"
+            placeholder={today.replace(/\//g, '-')}
             onChange={(e) => setDate(e.target.value)}
           />
         </label>

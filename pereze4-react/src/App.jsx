@@ -16,7 +16,9 @@ function App() {
         <header className="app-header">
           <div className="header-content">
             {/* Replace "/white-cat.png" with whatever your actual file is in public/ */}
-            <img src="/white-cat.png" alt="White Cat Logo" className="white-cat-image" />
+              <Link to="/">
+                <img src="/white-cat.png" alt="White Cat Logo" className="white-cat-image" />
+              </Link>
             <div className="header-text">
               <h1>White Cat Exercise Tracker</h1>
               <p>Keep track of all your workouts in one place</p>
