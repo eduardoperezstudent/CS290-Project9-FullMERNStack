@@ -1,14 +1,12 @@
 /* 1) GLOBAL PAGE DESIGN */
 /* -------------------------------------------------- */
 
-
-
 body {
   font-family: 'Segoe UI', Verdana, Geneva, sans-serif;
   background-color: #f9f7fc;
   color: #333333;
-  margin: 0;
-  padding: 0;
+  margin: 1;
+  padding: 1;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -40,7 +38,7 @@ header .header-content {
 
 .white-cat-image {
   max-width: 120px;
-  border: 2px solid #e0ddec;
+  border: 3px solid #e0ddec;
   border-radius: 8px;
 }
 
@@ -133,6 +131,7 @@ main {
   cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
+  font-family: "Georgia", "Palatino Linotype", "Book Antiqua", serif;
   transition: background-color 0.2s ease-in-out;
 }
 
@@ -150,7 +149,7 @@ table {
 }
 
 .exercise-table th {
-  background-color: #e9d7f5;  /* slightly bolder lavender for headers */
+  background-color: #e9d7f5;  
   color: #333333;
   border: 1px solid #d3c9e6;
   padding: 0.75rem;
@@ -165,11 +164,11 @@ table {
 
 /* Zebra striping for rows */
 .exercise-table tbody tr:nth-child(odd) {
-  background-color: #fbfaff;  /* soft, nearly white */
+  background-color: #fbfaff; 
 }
 
 .exercise-table tbody tr:nth-child(even) {
-  background-color: #f5f0fb;  /* subtle lavender tone */
+  background-color: #f5f0fb;  
 }
 
 
@@ -205,12 +204,23 @@ footer {
   transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
+.edit-icon {
+  color: #4a90e2;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
 .edit-icon:hover {
-  color: #4a90e2; /* calm blue */
-  transform: scale(1.1);
+  color: inherit;
+}
+
+.delete-icon {
+  color: #d9534f;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
 }
 
 .delete-icon:hover {
-  color: #d9534f; /* vivid red */
-  transform: scale(1.1);
+  color: inherit;
 }
+

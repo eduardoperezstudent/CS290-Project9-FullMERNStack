@@ -12,11 +12,11 @@ export default function AddExercisePage() {
   const [name, setName] = useState('');
   const [reps, setReps] = useState('');
   const [weight, setWeight] = useState('');
-  const [unit, setUnit] = useState('kgs');            // default select
+  const [unit, setUnit] = useState('kgs');
   const [date, setDate] = useState('');
   const navigate = useNavigate();
 
-  // Get today's date in MM-DD-YY format for placeholder
+
   const today = new Date().toLocaleDateString('en-US', {
     year: '2-digit',
     month: '2-digit',
@@ -55,7 +55,7 @@ export default function AddExercisePage() {
 
   return (
     <div className="form-page">
-      <h2>Create New Exercise</h2>
+      <h2>Log New Exercise</h2>
       <form onSubmit={handleSubmit} className="exercise-form">
         <label>
           Name:

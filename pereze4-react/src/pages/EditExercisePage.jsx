@@ -18,7 +18,7 @@ export default function EditExercisePage() {
   const [date, setDate] = useState('');
   const navigate = useNavigate();
 
-  // Get today's date in MM-DD-YY format for placeholder
+
   const today = new Date().toLocaleDateString('en-US', {
     year: '2-digit',
     month: '2-digit',
@@ -31,7 +31,6 @@ export default function EditExercisePage() {
       navigate('/');
       return;
     }
-    // Otherwise, fill in the form fields:
     setName(exerciseToEdit.name);
     setReps(exerciseToEdit.reps);
     setWeight(exerciseToEdit.weight);
@@ -72,7 +71,7 @@ export default function EditExercisePage() {
 
   return (
     <div className="form-page">
-      <h2>Edit Exercise</h2>
+      <h2>Edit Exercise Log</h2>
       <form onSubmit={handleSave} className="exercise-form">
         <label>
           Name:
