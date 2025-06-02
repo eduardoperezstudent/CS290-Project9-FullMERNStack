@@ -25,12 +25,6 @@ async function connect() {
 
 /**
  * Define the Mongoose schema for the "exercises" collection.
- * Each document must have the following properties:
- *  - name:     String, required, at least one character
- *  - reps:     Number, required, integer > 0
- *  - weight:   Number, required, integer > 0
- *  - unit:     String, required, either "kgs" or "lbs"
- *  - date:     String, required, format "MM-DD-YY"
  */
 const exerciseSchema = new mongoose.Schema({
   name: {
@@ -174,7 +168,7 @@ async function deleteExerciseById(id) {
 }
 
 
-// Export only the functions (do not export the Exercise model class)
+
 export {
   connect,
   createExercise,

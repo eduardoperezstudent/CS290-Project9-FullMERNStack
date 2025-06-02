@@ -31,7 +31,7 @@ app.listen(PORT, async () => {
 
 /**
  * Return true if `id` is exactly 24 hexadecimal characters.
- * We use this to short-circuit and return 404 before Mongoose tries to cast.
+ * Short-circuit and return 404 before Mongoose tries to cast.
  */
 function isValidHexId(id) {
   return /^[0-9a-fA-F]{24}$/.test(id);
@@ -95,28 +95,57 @@ function validateRequestBody(body) {
     return { valid: false };
   }
 
-  // date: string matching MM-DD-YY
   if (typeof body.date !== 'string') {
     return { valid: false };
   }
-  const format = /^\d\d-\d\d-\d\d$/;
-  if (!format.test(body.date)) {
+  if (!isDateValid(body.date)) {
     return { valid: false };
   }
 
   return { valid: true };
 }
 
+
+/**
+ * Return true if `dateStr` is in MM-DD-YY format and is a valid calendar date
+ * (year = 2000 + YY, with proper month/day/leap logic).
+ */
+function isDateValid(dateStr) {
+  const regex = /^(\d\d)-(\d\d)-(\d\d)$/;
+  const m = dateStr.match(regex);
+  if (!m) return false;
+
+  const month = Number(m[1]);
+  const day   = Number(m[2]);
+  const yy    = Number(m[3]);
+  const fullYear = 2000 + yy;
+
+  if (month < 1 || month > 12) return false;
+  if (day < 1) return false;
+
+  const d = new Date(fullYear, month - 1, day);
+  if (
+    d.getFullYear() !== fullYear ||
+    d.getMonth()    !== (month - 1) ||
+    d.getDate()     !== day
+  ) {
+    return false;
+  }
+  return true;
+}
+
+
+  
+
 /**
  * POST /exercises
  *
- * Creates a new Exercise document. Expects a JSON body with exactly five properties:
+ * Creates a new Exercise document. Accepts a JSON body with exactly five properties:
  *   - name   (string, at least one character)
  *   - reps   (integer > 0)
  *   - weight (integer > 0)
  *   - unit   ("kgs" or "lbs", case-insensitive)
  *   - date   (string matching /^\d\d-\d\d-\d\d$/)
- *
  */
 app.post(
   '/exercises',
@@ -128,7 +157,6 @@ app.post(
       return res.status(400).json({ Error: 'Invalid request' });
     }
 
-    // Normalize unit to lowercase before storing
     const exerciseData = {
       name: body.name,
       reps: body.reps,
@@ -142,11 +170,10 @@ app.post(
   })
 );
 
+
 /**
  * GET /exercises
- *
  * Returns the entire "exercises" collection as an array.
- *
  */
 app.get(
   '/exercises',
@@ -156,12 +183,11 @@ app.get(
   })
 );
 
+
 /**
  * GET /exercises/:_id
  * Fetch one Exercise document by its MongoDB _id.
- * First check that req.params._id is exactly 24 hex chars.
- * If not, immediately return 404.
- *
+ * First check that req.params._id is exactly 24 hex chars. If not, immediately return 404.
  */
 app.get(
   '/exercises/:_id',
@@ -180,6 +206,7 @@ app.get(
   })
 );
 
+
 /**
  * PUT /exercises/:_id
  * Updates a document by its _id. Expects a JSON body with exactly the same five fields
@@ -188,8 +215,14 @@ app.get(
  * Request validation order:
  *   1. Verify that :_id is 24‐hex; if not, 404.
  *   2. Verify body is valid (same five fields, correct format); if invalid → 400.
- *   3. Otherwise, attempt to update; if no document existed, return 404.
- *   4. If updated, return 200 + updated doc.
+ *   3. If no document existed, return 404.
+ *   4. If valid and updated, return 200 + updated doc.
+ */
+/**
+ * Correct ordering strictly per spec:
+ * 1) Validate the body → if invalid → 400.
+ * 2) Then check that `_id` is a 24‐hex string → if not → 404.
+ * 3) Attempt the database update → if not found → 404, else → 200 + updated doc.
  */
 app.put(
   '/exercises/:_id',
@@ -197,18 +230,18 @@ app.put(
     const { _id } = req.params;
     const body = req.body;
 
-    // 1) Check id format
-    if (!isValidHexId(_id)) {
-      return res.status(404).json({ Error: 'Not found' });
-    }
-
-    // 2) Validate request body
+    // 1) Validate request body first
     const { valid } = validateRequestBody(body);
     if (!valid) {
       return res.status(400).json({ Error: 'Invalid request' });
     }
 
-    // 3) Attempt to update the existing document
+    // 2) Now check ID‐format
+    if (!isValidHexId(_id)) {
+      return res.status(404).json({ Error: 'Not found' });
+    }
+
+    // 3) Attempt to update in MongoDB
     const updated = await updateExerciseById(_id, {
       name: body.name,
       reps: body.reps,
@@ -216,16 +249,13 @@ app.put(
       unit: body.unit.toLowerCase(),
       date: body.date
     });
-
-    // If no document was found with that _id, updateExerciseById returns null
     if (!updated) {
       return res.status(404).json({ Error: 'Not found' });
     }
-
-    // 4) Return the updated document
     return res.status(200).json(updated);
   })
 );
+
 
 /**
  * DELETE /exercises/:_id
@@ -237,20 +267,16 @@ app.delete(
   asyncHandler(async (req, res) => {
     const { _id } = req.params;
 
-    // 1) If id is not 24 hex characters, return 404
+
     if (!isValidHexId(_id)) {
       return res.status(404).json({ Error: 'Not found' });
     }
 
-    // 2) Attempt deletion
     const deleted = await deleteExerciseById(_id);
     if (!deleted) {
       return res.status(404).json({ Error: 'Not found' });
     }
 
-    // 3) Return 204 if it was deleted
     return res.status(204).end();
   })
 );
-
-
