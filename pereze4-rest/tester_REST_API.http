@@ -44,7 +44,7 @@ Content-Type: application/json
 
 {
   "name": "Lunges",
-  "reps": 10,
+  "reps": 0,
   "weight": 1,
   "unit": "kgs",
   "date": "02-29-24"
@@ -180,7 +180,7 @@ Accept: application/json
 ### 8) GET /exercises/:_id → Success
 ### =====================================================
 # Replace <PASTE_ID_FROM_STEP_4> below with the _id you got in step 4
-GET http://localhost:3000/exercises/683c93d97a20c7621c66c6a1
+GET http://localhost:3000/exercises/683cd1bb736bc89711a9c249
 Accept: application/json
 
 ###
@@ -205,7 +205,7 @@ Accept: application/json
 ### 9) PUT /exercises/:_id → Failure (invalid request body)
 ### =====================================================
 # Replace <PASTE_ID_FROM_STEP_4> below
-PUT http://localhost:3000/exercises/683c93d97a20c7621c66c6a1
+PUT http://localhost:3000/exercises/683cc5ec7a20c7621c66c6b7
 Content-Type: application/json
 
 {
@@ -253,15 +253,15 @@ Content-Type: application/json
 ### 11) PUT /exercises/:_id → Success (update existing document)
 ### =====================================================
 # Replace <PASTE_ID_FROM_STEP_4> below with the same ID from step 4
-PUT http://localhost:3000/exercises/683c93d97a20c7621c66c6a1
+PUT http://localhost:3000/exercises/683d1137e19b661bd88fa117
 Content-Type: application/json
 
 {
-  "name": "Wide Push Ups",
+  "name": "Press",
   "reps": 25,
   "weight": 2,
-  "unit": "LBS",
-  "date": "06-01-25"
+  "unit": "KGS",
+  "date": "06-30-25"
 }
 ###
 ### Expected response: 200 OK with the updated document
@@ -285,7 +285,7 @@ Content-Type: application/json
 ### 12) GET /exercises/:_id (verify the update)
 ### =====================================================
 # Replace <PASTE_ID_FROM_STEP_4> below
-GET http://localhost:3000/exercises/683c93d97a20c7621c66c6a1
+GET http://localhost:3000/exercises/683cc5ec7a20c7621c66c6b7
 Accept: application/json
 
 ###
@@ -326,7 +326,7 @@ DELETE http://localhost:3000/exercises/000000000000000000000000
 ### 14) DELETE /exercises/:_id → Success
 ### =====================================================
 # Replace <PASTE_ID_FROM_STEP_4> below
-DELETE http://localhost:3000/exercises/683c93d97a20c7621c66c6a1
+DELETE http://localhost:3000/exercises/683d1137e19b661bd88fa117
 
 ###
 ### Expected response: 204 No Content (empty body)
@@ -366,7 +366,7 @@ Accept: application/json
 ### 16) DELETE /exercises/:_id → Success (remove last doc)
 ### =====================================================
 # Finally, delete the remaining “Squats” document
-DELETE http://localhost:3000/exercises/683c94fb7a20c7621c66c6a4
+DELETE http://localhost:3000/exercises/683cd1bb736bc89711a9c249
 
 ###
 ### Expected response: 204 No Content
