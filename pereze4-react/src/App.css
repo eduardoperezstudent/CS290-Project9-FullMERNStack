@@ -1,42 +1,189 @@
+/* src/App.css */
+
+/* --- Root color variables --- */
+:root {
+  --primary-bg: #fafafa;
+  --primary-text: #333;
+  --accent-color: #ffcc00;
+  --header-bg: #ffffff;
+  --nav-bg: #ffffff;
+  --border-color: #ddd;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 #root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- App Header --- */
+.app-header {
+  background-color: var(--header-bg);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 2rem;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.white-cat-image {
+  max-width: 100px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-text h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: var(--accent-color);
+}
+
+.header-text p {
+  margin: 0.2rem 0 0;
+  font-size: 1rem;
+  color: var(--primary-text);
+}
+
+/* --- Navigation Bar --- */
+nav {
+  background-color: var(--nav-bg);
+  padding: 0.5rem 0;
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+nav a {
+  color: var(--primary-text);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+nav a:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+/* --- Main container --- */
+main {
+  flex: 1;
+  padding: 2rem;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
+}
+
+/* --- Footer --- */
+.app-footer {
+  background-color: var(--header-bg);
+  text-align: center;
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.9rem;
+}
+
+/* --- Table styling --- */
+.exercise-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.exercise-table th,
+.exercise-table td {
+  border: 1px solid var(--border-color);
+  padding: 0.6rem;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.exercise-table th {
+  background-color: var(--nav-bg);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.icon-cell {
+  width: 40px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.icon {
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--primary-text);
+  transition: color 0.2s;
 }
 
-.card {
-  padding: 2em;
+.edit-icon:hover {
+  color: #007bff;
 }
 
-.read-the-docs {
-  color: #888;
+.delete-icon:hover {
+  color: #dc3545;
+}
+
+/* --- Form styling (Add/Edit pages) --- */
+.form-page {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.exercise-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.exercise-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+}
+
+.exercise-form input,
+.exercise-form select {
+  padding: 0.5rem;
+  font-family: inherit;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.exercise-form button {
+  align-self: flex-start;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: var(--accent-color);
+  border: none;
+  border-radius: 4px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.exercise-form button:hover {
+  background-color: #e6b800;
+}
+
+/* --- Error message styling --- */
+.error-msg {
+  color: red;
+  margin-bottom: 1rem;
 }
