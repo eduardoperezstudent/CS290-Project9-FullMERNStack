@@ -39,7 +39,7 @@ const exerciseSchema = new mongoose.Schema({
     min: 1,
     validate: {
       validator: Number.isInteger,
-      message: 'reps must be an integer'
+      message: 'reps must be a positive integer'
     }
   },
   weight: {
@@ -48,7 +48,7 @@ const exerciseSchema = new mongoose.Schema({
     min: 1,
     validate: {
       validator: Number.isInteger,
-      message: 'weight must be an integer'
+      message: 'weight must be a positive integer'
     }
   },
   unit: {

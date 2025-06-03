@@ -8,7 +8,7 @@ export default function ExerciseList({ exercises, onDelete }) {
   if (!exercises || exercises.length === 0) {
     return (
       <div className="empty-message">
-        <p>You have no logged exercises.<br />Start by creating your first one!</p>
+        <p>You have no logged exercise.<br />Start by creating your first one!</p>
         <button onClick={() => navigate('/add')} className="add-exercise-btn">
           🐱 Add Your First Exercise
         </button>

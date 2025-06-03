@@ -10,18 +10,19 @@ import { useNavigate } from 'react-router-dom';
  */
 export default function AddExercisePage() {
   const [name, setName] = useState('');
-  const [reps, setReps] = useState('');
-  const [weight, setWeight] = useState('');
+  const [reps, setReps] = useState('1');
+  const [weight, setWeight] = useState('1');
   const [unit, setUnit] = useState('kgs');
-  const [date, setDate] = useState('');
   const navigate = useNavigate();
-
-
+ 
   const today = new Date().toLocaleDateString('en-US', {
     year: '2-digit',
     month: '2-digit',
     day: '2-digit'
   });
+
+  const [date, setDate] = useState(today.replace(/\//g, '-'));
+
 
 const handleSubmit = async (e) => {
   e.preventDefault();

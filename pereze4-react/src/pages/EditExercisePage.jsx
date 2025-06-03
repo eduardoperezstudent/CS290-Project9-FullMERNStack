@@ -57,10 +57,9 @@ const handleSave = async (e) => {
     });
     if (res.status === 200) {
       alert(
-        `Exercise updated successfully:\n` +
-        `Name: ${payload.name}\n` +
-        `Reps: ${payload.reps}\n` +
-        `Weight: ${payload.weight} ${payload.unit}\n` +
+        `Exercise updated!\n` +
+        `${payload.name}\n` +
+        `${payload.reps} x ${payload.weight}${payload.unit} \n` +
         `Date: ${payload.date}`
       );
     } else {
