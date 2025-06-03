@@ -34,7 +34,7 @@ export default function HomePage() {
       const res = await fetch(`/exercises/${id}`, { method: 'DELETE' });
       if (res.ok) {
         setExercises(prev => prev.filter(ex => ex._id !== id));
-        showToast('✓ Exercise deleted');
+        showToast('\u274C Exercise Deleted');
       } else {
         alert('Failed to delete');
       }

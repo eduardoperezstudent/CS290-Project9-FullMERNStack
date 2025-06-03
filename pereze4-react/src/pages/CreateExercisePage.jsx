@@ -1,136 +1,141 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-/**
- * Controlled form for creating a new exercise.
- *
- * Fields: name, reps, weight, unit (select), date (text).
- * On success (201), show alert, then navigate to Home.
- * On failure, show alert and still navigate Home.
- */
-export default function AddExercisePage() {
+export default function CreateExercisePage() {
   const [name, setName] = useState('');
   const [reps, setReps] = useState('1');
   const [weight, setWeight] = useState('1');
   const [unit, setUnit] = useState('kgs');
   const navigate = useNavigate();
- 
+
   const today = new Date().toLocaleDateString('en-US', {
     year: '2-digit',
     month: '2-digit',
     day: '2-digit'
   });
-
   const [date, setDate] = useState(today.replace(/\//g, '-'));
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const payload = {
+      name: name.trim(),
+      reps: parseInt(reps, 10),
+      weight: parseInt(weight, 10),
+      unit: unit.toLowerCase(),
+      date: date.trim()
+    };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const payload = {
-    name: name.trim(),
-    reps: parseInt(reps, 10),
-    weight: parseInt(weight, 10),
-    unit: unit.toLowerCase(),
-    date: date.trim()
-  };
-
-  try {
-    const res = await fetch('/exercises', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    if (res.status === 201) {
-      alert(
-        `Exercise created successfully:\n` +
-        `Name: ${payload.name}\n` +
-        `Reps: ${payload.reps}\n` +
-        `Weight: ${payload.weight} ${payload.unit}\n` +
-        `Date: ${payload.date}`
-      );
-    } else {
-      alert(`Failed to create exercise (status ${res.status})`);
+    try {
+      const res = await fetch('/exercises', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (res.status === 201) {
+        alert(
+          `Exercise Created!\n` +
+          `${payload.name}\n` +
+          `${payload.reps} x ${payload.weight}${payload.unit} \n` +
+          `Date: ${payload.date}`
+        );
+      } else {
+        alert(`Failed to create exercise (status ${res.status})`);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error creating exercise.');
+    } finally {
+      navigate('/');
     }
-  } catch (err) {
-    console.error(err);
-    alert('Error creating exercise.');
-  } finally {
-    navigate('/');
-  }
-};
+  };
 
   return (
     <div className="form-page">
       <h2>Log New Exercise</h2>
       <form onSubmit={handleSubmit} className="exercise-form">
-        <label>
-          Name:
+
+        <div className="inline-field">
+          <label htmlFor="name">Name:</label>
           <input
+            id="name"
             type="text"
+            className="wide-input"
             value={name}
             required
             placeholder="e.g. Push Ups"
             onChange={(e) => setName(e.target.value)}
           />
-        </label>
+        </div>
 
-        <label>
-          Reps:
+        <div className="row-fields">
+          <div className="inline-field">
+            <label htmlFor="reps">Reps:</label>
+            <input
+              id="reps"
+              type="number"
+              className="compact-input"
+              value={reps}
+              required
+              min="1"
+              onChange={(e) => setReps(e.target.value)}
+            />
+          </div>
+
+          <div className="inline-field">
+            <label htmlFor="weight">Weight:</label>
+            <input
+              id="weight"
+              type="number"
+              className="compact-input"
+              value={weight}
+              required
+              min="1"
+              onChange={(e) => setWeight(e.target.value)}
+            />
+          </div>
+
+          <div className="inline-field">
+            <label htmlFor="unit">Unit:</label>
+            <select
+              id="unit"
+              className="compact-input"
+              value={unit}
+              required
+              onChange={(e) => setUnit(e.target.value)}
+            >
+              <option value="kgs">kgs</option>
+              <option value="lbs">lbs</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="inline-field">
+          <label htmlFor="date">Date:</label>
           <input
-            type="number"
-            value={reps}
-            required
-            min="1"
-            placeholder="e.g. 20"
-            onChange={(e) => setReps(e.target.value)}
-          />
-        </label>
-
-        <label>
-          Weight:
-          <input
-            type="number"
-            value={weight}
-            required
-            min="1"
-            placeholder="e.g. 50"
-            onChange={(e) => setWeight(e.target.value)}
-          />
-        </label>
-
-        <label>
-          Unit:
-          <select
-            value={unit}
-            required
-            onChange={(e) => setUnit(e.target.value)}
-          >
-            <option value="kgs">kgs</option>
-            <option value="lbs">lbs</option>
-          </select>
-        </label>
-
-        <label>
-          Date (MM-DD-YY):
-          <input
+            id="date"
             type="text"
+            className="wide-input"
             value={date}
             required
             placeholder={today.replace(/\//g, '-')}
             onChange={(e) => setDate(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                const now = new Date();
+                const mm = String(now.getMonth() + 1).padStart(2, '0');
+                const dd = String(now.getDate()).padStart(2, '0');
+                const yy = String(now.getFullYear()).slice(2);
+                setDate(`${mm}-${dd}-${yy}`);
+                e.preventDefault();
+              }
+            }}
           />
-        </label>
-
-        <div className="form-buttons">
-          <button type="submit">
-            Add
-          </button>
-          
-          <button type="button" onClick={() => navigate('/')}>
-            Cancel
-          </button>
         </div>
 
+        <div className="form-buttons">
+          <button type="submit">Add</button>
+          <button type="button" onClick={() => navigate('/')}>Cancel</button>
+        </div>
 
       </form>
     </div>
