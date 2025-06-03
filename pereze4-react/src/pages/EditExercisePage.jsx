@@ -26,7 +26,6 @@ export default function EditExercisePage() {
   });
 
   useEffect(() => {
-    // If context is null, we have nothing to edit → bounce to Home
     if (!exerciseToEdit) {
       navigate('/');
       return;
@@ -38,36 +37,42 @@ export default function EditExercisePage() {
     setDate(exerciseToEdit.date);
   }, [exerciseToEdit, navigate]);
 
-  const handleSave = async (e) => {
-    e.preventDefault();
-    if (!exerciseToEdit) return;
+const handleSave = async (e) => {
+  e.preventDefault();
+  if (!exerciseToEdit) return;
 
-    const payload = {
-      name: name.trim(),
-      reps: parseInt(reps, 10),
-      weight: parseInt(weight, 10),
-      unit: unit.toLowerCase(),
-      date: date.trim()
-    };
-
-    try {
-      const res = await fetch(`/exercises/${exerciseToEdit._id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      if (res.status === 200) {
-        alert('Exercise updated successfully!');
-      } else {
-        alert(`Failed to update (${res.status})`);
-      }
-    } catch (err) {
-      console.error(err);
-      alert('Error updating exercise.');
-    } finally {
-      navigate('/');
-    }
+  const payload = {
+    name: name.trim(),
+    reps: parseInt(reps, 10),
+    weight: parseInt(weight, 10),
+    unit: unit.toLowerCase(),
+    date: date.trim()
   };
+
+  try {
+    const res = await fetch(`/exercises/${exerciseToEdit._id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.status === 200) {
+      alert(
+        `Exercise updated successfully:\n` +
+        `Name: ${payload.name}\n` +
+        `Reps: ${payload.reps}\n` +
+        `Weight: ${payload.weight} ${payload.unit}\n` +
+        `Date: ${payload.date}`
+      );
+    } else {
+      alert(`Failed to update (${res.status})`);
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Error updating exercise.');
+  } finally {
+    navigate('/');
+  }
+};
 
   return (
     <div className="form-page">
@@ -128,7 +133,14 @@ export default function EditExercisePage() {
           />
         </label>
 
-        <button type="submit">Save Changes</button>
+        <div className="form-buttons">
+          <button type="submit">Edit Exercise</button>
+          <button type="button" onClick={() => navigate('/')}>
+            Cancel
+          </button>
+        </div>
+
+
       </form>
     </div>
   );

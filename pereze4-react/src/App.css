@@ -53,8 +53,22 @@ header .header-content {
 
 .header-text p {
   margin: 0.25rem 0 0;
-  color: #555;
+  color: #a97ca4; /* soft mauve */
   font-size: 1rem;
+  font-style: italic;
+  font-family: "Georgia", "Palatino Linotype", "Book Antiqua", serif;
+  letter-spacing: 0.3px;
+}
+
+
+h2 {
+  font-family: "Georgia", "Palatino Linotype", "Book Antiqua", serif;
+  color: #885982; /* soft lavender-rose */
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 1px #f1e6f5;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
 nav {
@@ -197,7 +211,7 @@ footer {
 }
 
 
-/* 8) ICON INTERACTIONS */
+/* 8) ICON AND BUTTON INTERACTIONS */
 /* -------------------------------------------------- */
 .icon {
   cursor: pointer;
@@ -224,3 +238,35 @@ footer {
   color: inherit;
 }
 
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.form-buttons button {
+  flex: 1;
+}
+
+
+/* 8) TOAST MESSAGE AFTER EXERCISE DELETION */
+/* -------------------------------------------------- */
+.toast {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background-color: #4a90e2;
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+  font-weight: bold;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+  z-index: 1000;
+}
+
+.toast.hide {
+  opacity: 0;
+}

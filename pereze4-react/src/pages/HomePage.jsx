@@ -4,15 +4,14 @@ import ExerciseList from '../components/ExerciseList';
 export default function HomePage() {
   const [exercises, setExercises] = useState([]);
   const [error, setError] = useState(null);
+  const [toastClass, setToastClass] = useState('');
+  const [toastMessage, setToastMessage] = useState('');
 
-  // 1) Fetch all exercises on mount
   useEffect(() => {
     async function loadExercises() {
       try {
         const res = await fetch('/exercises');
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
+        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
         const data = await res.json();
         setExercises(data);
       } catch (err) {
@@ -23,18 +22,21 @@ export default function HomePage() {
     loadExercises();
   }, []);
 
-  // 2) Handler to delete one exercise by ID
-  const handleDelete = async (_id) => {
+  const showToast = (message) => {
+    setToastMessage(message);
+    setToastClass('');
+    setTimeout(() => setToastClass('hide'), 1000);
+    setTimeout(() => setToastMessage(''), 2000);
+  };
+
+  const handleDelete = async (id) => {
     try {
-      const res = await fetch(`/exercises/${_id}`, {
-        method: 'DELETE'
-      });
-      if (res.status === 204) {
-        // Remove it from local state so table updates immediately:
-        setExercises((prev) => prev.filter((ex) => ex._id !== _id));
+      const res = await fetch(`/exercises/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        setExercises(prev => prev.filter(ex => ex._id !== id));
+        showToast('✓ Exercise deleted');
       } else {
-        // Could show an error message here:
-        alert(`Failed to delete (status ${res.status})`);
+        alert('Failed to delete');
       }
     } catch (err) {
       console.error(err);
@@ -46,10 +48,8 @@ export default function HomePage() {
     <div className="home-page">
       <h2>All Exercises</h2>
       {error && <p className="error-msg">{error}</p>}
-      <ExerciseList
-        exercises={exercises}
-        onDelete={handleDelete}
-      />
+      <ExerciseList exercises={exercises} onDelete={handleDelete} />
+      {toastMessage && <div className={`toast ${toastClass}`}>{toastMessage}</div>}
     </div>
   );
 }

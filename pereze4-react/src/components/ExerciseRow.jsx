@@ -3,33 +3,21 @@ import { FaTrashAlt, FaEdit } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { ExerciseContext } from '../context/ExerciseContext';
 
-/**
- * Renders one table row (one exercise). 
- * Columns: name, reps, weight, unit, date.
- * Then Delete icon and Edit icon.
- *
- * Props:
- *   - exercise: { _id, name, reps, weight, unit, date }
- *   - onDelete: function that takes (_id) and deletes it
- */
 export default function ExerciseRow({ exercise, onDelete }) {
   const navigate = useNavigate();
   const { setExerciseToEdit } = useContext(ExerciseContext);
 
   const handleEditClick = () => {
-    // 1. Store this exact exercise object in context:
     setExerciseToEdit(exercise);
-    // 2. Navigate to /edit 
     navigate('/edit');
   };
 
   const handleDeleteClick = () => {
-    // Immediately call the onDelete callback:
     onDelete(exercise._id);
   };
 
   return (
-    <tr>
+    <tr className="exercise-row">
       <td>{exercise.name}</td>
       <td>{exercise.reps}</td>
       <td>{exercise.weight}</td>

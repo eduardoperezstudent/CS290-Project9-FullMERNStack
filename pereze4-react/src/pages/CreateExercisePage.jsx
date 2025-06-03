@@ -23,35 +23,40 @@ export default function AddExercisePage() {
     day: '2-digit'
   });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Build the payload exactly as the backend expects:
-    const payload = {
-      name: name.trim(),
-      reps: parseInt(reps, 10),
-      weight: parseInt(weight, 10),
-      unit: unit.toLowerCase(),   // “kgs” or “lbs”
-      date: date.trim()
-    };
-
-    try {
-      const res = await fetch('/exercises', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      if (res.status === 201) {
-        alert('Exercise created successfully!');
-      } else {
-        alert(`Failed to create exercise (status ${res.status})`);
-      }
-    } catch (err) {
-      console.error(err);
-      alert('Error creating exercise.');
-    } finally {
-      navigate('/');
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const payload = {
+    name: name.trim(),
+    reps: parseInt(reps, 10),
+    weight: parseInt(weight, 10),
+    unit: unit.toLowerCase(),
+    date: date.trim()
   };
+
+  try {
+    const res = await fetch('/exercises', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.status === 201) {
+      alert(
+        `Exercise created successfully:\n` +
+        `Name: ${payload.name}\n` +
+        `Reps: ${payload.reps}\n` +
+        `Weight: ${payload.weight} ${payload.unit}\n` +
+        `Date: ${payload.date}`
+      );
+    } else {
+      alert(`Failed to create exercise (status ${res.status})`);
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Error creating exercise.');
+  } finally {
+    navigate('/');
+  }
+};
 
   return (
     <div className="form-page">
@@ -115,7 +120,14 @@ export default function AddExercisePage() {
           />
         </label>
 
-        <button type="submit">Add Exercise</button>
+        <div className="form-buttons">
+          <button type="submit">Add Exercise</button>
+          <button type="button" onClick={() => navigate('/')}>
+            Cancel
+          </button>
+        </div>
+
+
       </form>
     </div>
   );
