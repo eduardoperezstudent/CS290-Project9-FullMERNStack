@@ -121,7 +121,10 @@ const handleSubmit = async (e) => {
         </label>
 
         <div className="form-buttons">
-          <button type="submit">Add Exercise</button>
+          <button type="submit">
+            Add
+          </button>
+          
           <button type="button" onClick={() => navigate('/')}>
             Cancel
           </button>

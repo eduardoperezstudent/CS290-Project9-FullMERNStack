@@ -134,7 +134,10 @@ const handleSave = async (e) => {
         </label>
 
         <div className="form-buttons">
-          <button type="submit">Edit Exercise</button>
+          <button type="submit">
+            Update
+          </button>
+          
           <button type="button" onClick={() => navigate('/')}>
             Cancel
           </button>

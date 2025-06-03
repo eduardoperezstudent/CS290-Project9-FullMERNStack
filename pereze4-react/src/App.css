@@ -74,21 +74,30 @@ h2 {
 nav {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
-  margin-top: 0.75rem;
+  gap: 5rem;
+  background-color: #f0e6f6;
+  padding: 1rem 1.5rem;
+  margin: 3.5rem 0; /* buffer above and below */
+  border-top: 2px solid #e0ddec;
+  border-bottom: 2px solid #e0ddec;
+  box-shadow: 0 2px 4px rgba(180, 144, 170, 0.15);
+  border-radius: 6px;
 }
 
 nav a {
   font-size: 1.1rem;
   color: #6f5499;
   text-decoration: none;
-  padding: 0.25rem 0.5rem;
-  transition: color 0.2s ease-in-out;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 nav a:hover {
+  background-color: #e8dcf1;
   color: #d17fa0;
 }
+
 
 /* 3) MAIN CONTAINER */
 /* -------------------------------------------------- */
@@ -270,3 +279,37 @@ footer {
 .toast.hide {
   opacity: 0;
 }
+
+
+/* 8) Create first exercise */
+/* -------------------------------------------------- */
+.empty-message {
+  text-align: center;
+  margin-top: 3rem;
+  color: #6f5499;
+  font-family: "Georgia", "Palatino Linotype", serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.add-exercise-btn {
+  margin-top: 1rem;
+  padding: 0.7rem 1.3rem;
+  font-size: 1rem;
+  background-color: #fef8fc;
+  color: #6f5499;
+  border: 2px solid #d17fa0;
+  border-radius: 6px;
+  font-family: "Georgia", "Palatino Linotype", serif;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.add-exercise-btn:hover {
+  background-color: #d17fa0;
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
