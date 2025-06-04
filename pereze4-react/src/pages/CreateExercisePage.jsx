@@ -9,9 +9,7 @@ export default function CreateExercisePage() {
   const navigate = useNavigate();
 
   const today = new Date().toLocaleDateString('en-US', {
-    year: '2-digit',
-    month: '2-digit',
-    day: '2-digit'
+    year: '2-digit', month: '2-digit', day: '2-digit'
   });
   const [date, setDate] = useState(today.replace(/\//g, '-'));
 
@@ -19,8 +17,8 @@ export default function CreateExercisePage() {
     e.preventDefault();
     const payload = {
       name: name.trim(),
-      reps: parseInt(reps, 10),
-      weight: parseInt(weight, 10),
+      reps: +reps,
+      weight: +weight,
       unit: unit.toLowerCase(),
       date: date.trim()
     };
@@ -31,16 +29,9 @@ export default function CreateExercisePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-      if (res.status === 201) {
-        alert(
-          `Exercise Created!\n` +
-          `${payload.name}\n` +
-          `${payload.reps} x ${payload.weight}${payload.unit} \n` +
-          `Date: ${payload.date}`
-        );
-      } else {
-        alert(`Failed to create exercise (status ${res.status})`);
-      }
+      res.status === 201
+        ? alert(`Exercise Created!\n${payload.name}\n${payload.reps} x ${payload.weight}${payload.unit} \nDate: ${payload.date}`)
+        : alert(`Failed to create exercise (status ${res.status})`);
     } catch (err) {
       console.error(err);
       alert('Error creating exercise.');
@@ -58,8 +49,8 @@ export default function CreateExercisePage() {
           <label htmlFor="name">Name:</label>
           <input
             id="name"
-            type="text"
             className="wide-input"
+            type="text"
             value={name}
             required
             placeholder="e.g. Push Ups"
@@ -68,39 +59,29 @@ export default function CreateExercisePage() {
         </div>
 
         <div className="row-fields">
-          <div className="inline-field">
-            <label htmlFor="reps">Reps:</label>
-            <input
-              id="reps"
-              type="number"
-              className="compact-input"
-              value={reps}
-              required
-              min="1"
-              onChange={(e) => setReps(e.target.value)}
-            />
-          </div>
-
-          <div className="inline-field">
-            <label htmlFor="weight">Weight:</label>
-            <input
-              id="weight"
-              type="number"
-              className="compact-input"
-              value={weight}
-              required
-              min="1"
-              onChange={(e) => setWeight(e.target.value)}
-            />
-          </div>
-
+          {[
+            { id: 'reps', label: 'Reps:', value: reps, setter: setReps },
+            { id: 'weight', label: 'Weight:', value: weight, setter: setWeight }
+          ].map(({ id, label, value, setter }) => (
+            <div className="inline-field" key={id}>
+              <label htmlFor={id}>{label}</label>
+              <input
+                id={id}
+                type="number"
+                className="compact-input"
+                value={value}
+                required
+                min="1"
+                onChange={(e) => setter(e.target.value)}
+              />
+            </div>
+          ))}
           <div className="inline-field">
             <label htmlFor="unit">Unit:</label>
             <select
               id="unit"
               className="compact-input"
               value={unit}
-              required
               onChange={(e) => setUnit(e.target.value)}
             >
               <option value="kgs">kgs</option>
@@ -113,8 +94,8 @@ export default function CreateExercisePage() {
           <label htmlFor="date">Date:</label>
           <input
             id="date"
-            type="text"
             className="wide-input"
+            type="text"
             value={date}
             required
             placeholder={today.replace(/\//g, '-')}
@@ -136,7 +117,6 @@ export default function CreateExercisePage() {
           <button type="submit">Add</button>
           <button type="button" onClick={() => navigate('/')}>Cancel</button>
         </div>
-
       </form>
     </div>
   );

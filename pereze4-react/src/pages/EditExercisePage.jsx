@@ -6,17 +6,17 @@ export default function EditExercisePage() {
   const { exerciseToEdit } = useContext(ExerciseContext);
   const navigate = useNavigate();
 
-  const today = new Date().toLocaleDateString('en-US', {
+  const todayStr = new Date().toLocaleDateString('en-US', {
     year: '2-digit',
     month: '2-digit',
     day: '2-digit'
-  });
+  }).replace(/\//g, '-');
 
   const [name, setName] = useState('');
   const [reps, setReps] = useState('1');
   const [weight, setWeight] = useState('1');
   const [unit, setUnit] = useState('kgs');
-  const [date, setDate] = useState(today.replace(/\//g, '-'));
+  const [date, setDate] = useState(todayStr);
 
   useEffect(() => {
     if (exerciseToEdit) {
@@ -24,7 +24,7 @@ export default function EditExercisePage() {
       setReps(exerciseToEdit.reps?.toString() || '1');
       setWeight(exerciseToEdit.weight?.toString() || '1');
       setUnit(exerciseToEdit.unit || 'kgs');
-      setDate(exerciseToEdit.date || today.replace(/\//g, '-'));
+      setDate(exerciseToEdit.date || todayStr);
     }
   }, [exerciseToEdit]);
 
@@ -45,13 +45,8 @@ export default function EditExercisePage() {
         body: JSON.stringify(payload)
       });
 
-      if (res.status === 200) {
-        alert(
-          `Exercise Updated!\n` +
-          `${payload.name}\n` +
-          `${payload.reps} x ${payload.weight}${payload.unit} \n` +
-          `Date: ${payload.date}`
-        );
+      if (res.ok) {
+        alert(`Exercise Updated!\n${payload.name}\n${payload.reps} x ${payload.weight}${payload.unit}\nDate: ${payload.date}`);
       } else {
         alert(`Failed to update (status ${res.status})`);
       }
@@ -67,7 +62,6 @@ export default function EditExercisePage() {
     <div className="form-page">
       <h2>Edit Exercise</h2>
       <form onSubmit={handleSubmit} className="exercise-form">
-
         <div className="inline-field">
           <label htmlFor="name">Name:</label>
           <input
@@ -75,8 +69,8 @@ export default function EditExercisePage() {
             type="text"
             className="wide-input"
             value={name}
-            required
             placeholder="e.g. Push Ups"
+            required
             onChange={(e) => setName(e.target.value)}
           />
         </div>
@@ -89,8 +83,8 @@ export default function EditExercisePage() {
               type="number"
               className="compact-input"
               value={reps}
-              required
               min="1"
+              required
               onChange={(e) => setReps(e.target.value)}
             />
           </div>
@@ -102,8 +96,8 @@ export default function EditExercisePage() {
               type="number"
               className="compact-input"
               value={weight}
-              required
               min="1"
+              required
               onChange={(e) => setWeight(e.target.value)}
             />
           </div>
@@ -130,8 +124,8 @@ export default function EditExercisePage() {
             type="text"
             className="wide-input"
             value={date}
+            placeholder={todayStr}
             required
-            placeholder={today.replace(/\//g, '-')}
             onChange={(e) => setDate(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
@@ -150,7 +144,6 @@ export default function EditExercisePage() {
           <button type="submit">Save</button>
           <button type="button" onClick={() => navigate('/')}>Cancel</button>
         </div>
-
       </form>
     </div>
   );

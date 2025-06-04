@@ -135,7 +135,6 @@ function isDateValid(dateStr) {
 }
 
 
-  
 
 /**
  * POST /exercises
@@ -212,17 +211,6 @@ app.get(
  * Updates a document by its _id. Expects a JSON body with exactly the same five fields
  * (name, reps, weight, unit, date) and identical validation rules to POST.
  *
- * Request validation order:
- *   1. Verify that :_id is 24‐hex; if not, 404.
- *   2. Verify body is valid (same five fields, correct format); if invalid → 400.
- *   3. If no document existed, return 404.
- *   4. If valid and updated, return 200 + updated doc.
- */
-/**
- * Correct ordering strictly per spec:
- * 1) Validate the body → if invalid → 400.
- * 2) Then check that `_id` is a 24‐hex string → if not → 404.
- * 3) Attempt the database update → if not found → 404, else → 200 + updated doc.
  */
 app.put(
   '/exercises/:_id',
@@ -230,18 +218,15 @@ app.put(
     const { _id } = req.params;
     const body = req.body;
 
-    // 1) Validate request body first
     const { valid } = validateRequestBody(body);
     if (!valid) {
       return res.status(400).json({ Error: 'Invalid request' });
     }
 
-    // 2) Now check ID‐format
     if (!isValidHexId(_id)) {
       return res.status(404).json({ Error: 'Not found' });
     }
 
-    // 3) Attempt to update in MongoDB
     const updated = await updateExerciseById(_id, {
       name: body.name,
       reps: body.reps,

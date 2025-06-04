@@ -200,9 +200,8 @@ main {
 
 /* Wide input: Name, Date */
 .wide-input {
-  width: 100%;
   max-width: 400px;
-
+  flex: 1;
 }
 
 /* Horizontal group for reps/weight/unit */
@@ -292,19 +291,40 @@ footer {
   color: inherit;
 }
 
+
+.add-exercise-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.add-exercise-icon {
+  font-size: 1.5rem;
+  color: #6f5499;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.add-exercise-icon:hover {
+  transform: scale(1.03);
+  color: #d17fa0;
+}
+
+
+
 /* 9) TOAST MESSAGE AFTER EXERCISE DELETION */
 /* -------------------------------------------------- */
 .toast {
   position: fixed;
   top: 1rem;
   right: 1rem;
-  background-color: #ebb08f;
+  background-color: #f8c2c2;
   color: white;
   padding: 0.75rem 1.25rem;
   border-radius: 4px;
   font-weight: bold;
   opacity: 1;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 2s ease-in-out;
   z-index: 1000;
 }
 
