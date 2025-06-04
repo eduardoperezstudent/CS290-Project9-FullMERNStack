@@ -3,7 +3,7 @@ import ExerciseRow from './ExerciseRow';
 import { useNavigate } from 'react-router-dom';
 import { RiStickyNoteAddLine } from 'react-icons/ri';
 
-export default function ExerciseList({ exercises, onDelete }) {
+export default function ExerciseTable({ exercises, onDelete }) {
   const navigate = useNavigate();
 
   if (!exercises || exercises.length === 0) {

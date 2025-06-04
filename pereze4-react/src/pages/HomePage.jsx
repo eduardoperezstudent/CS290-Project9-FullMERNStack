@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ExerciseList from '../components/ExerciseList';
+import ExerciseTable from '../components/ExerciseTable';
 
 export default function HomePage() {
   const [exercises, setExercises] = useState([]);
@@ -48,7 +48,7 @@ export default function HomePage() {
     <div className="home-page">
       <h2>All Exercises</h2>
       {error && <p className="error-msg">{error}</p>}
-      <ExerciseList exercises={exercises} onDelete={handleDelete} />
+      <ExerciseTable exercises={exercises} onDelete={handleDelete} />
       {toastMessage && <div className={`toast ${toastClass}`}>{toastMessage}</div>}
     </div>
   );
